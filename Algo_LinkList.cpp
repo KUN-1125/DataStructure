@@ -80,7 +80,7 @@ LNode *LocateElem(LinkList L, int e)
 
 // 插入结点操作
 // 将值为x的新结点插入到单链表的第i个位置上
-// 先检查插入位置的合法性，再找到第i-1个结点，再在其后插入新结点
+// 先检查插入位置的合法性，再找到第i-1个结点，再在其 后 插入新结点
 LinkList LNode_Insert(LinkList &L, int i)
 {
     if (i < 0)
@@ -94,6 +94,21 @@ LinkList LNode_Insert(LinkList &L, int i)
     s->data = x;
     s->next = p->next;
     p->next = s;
+    return L;
+}
+
+// 删除结点操作
+// 将第i个位置的结点删除并返回L
+// 先检查i的合法性，再找到第i-1个结点，删除i结点
+LinkList LNode_Delete(LinkList &L, int i)
+{
+    if (i < 1)
+        return L;
+    LNode *p, *q;
+    p = GetElem(L, i - 1);
+    q = p->next;
+    p->next = q->next;
+    free(q);
     return L;
 }
 
@@ -124,7 +139,9 @@ int main()
     LNode *p;
     p = GetElem(L, 3);
     printf("%d\n", p->data);
-    LNode_Insert(L,3);
+    LNode_Insert(L, 3);
+    Print_LinkList(L);
+    LNode_Delete(L, 3);
     Print_LinkList(L);
     return 0;
 }
