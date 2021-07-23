@@ -112,6 +112,22 @@ LinkList LNode_Delete(LinkList &L, int i)
     return L;
 }
 
+// 求表长操作
+int List_Length(LinkList L)
+{
+    LNode *p;
+    int i;
+    if (L->next == NULL)
+        return i = 0;
+    p = L->next;
+    while (p)
+    {
+        i++;
+        p = p->next;
+    }
+    return i;
+}
+
 // 打印链表L
 bool Print_LinkList(LinkList L)
 {
@@ -132,16 +148,24 @@ bool Print_LinkList(LinkList L)
 int main()
 {
     LinkList L;
+    printf("头插法建立链表：（9999结束）\n");
     List_HeadInsert(L);
     Print_LinkList(L);
+    printf("尾插法建立链表：（9999结束）\n");
     List_TailInsert(L);
     Print_LinkList(L);
+    printf("按位查找（第3位为）：");
     LNode *p;
     p = GetElem(L, 3);
     printf("%d\n", p->data);
+    printf("在第3位插入结点：");
     LNode_Insert(L, 3);
     Print_LinkList(L);
+    printf("删除第3位：");
     LNode_Delete(L, 3);
     Print_LinkList(L);
+    int i;
+    i=List_Length(L);
+    printf("链表长度为：%d\n",i);
     return 0;
 }
