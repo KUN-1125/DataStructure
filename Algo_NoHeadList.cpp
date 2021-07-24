@@ -64,8 +64,6 @@ void Print_List(NoHeadList L)
 {
     int flag;
     flag = List_Empty(L);
-    if (flag == 0)
-        printf("链表为空\n");
     if (flag == 1)
     {
         LNode *p = L;
@@ -77,6 +75,8 @@ void Print_List(NoHeadList L)
         }
         printf("\n");
     }
+    if (flag == 0)
+        printf("链表为空\n");
 }
 
 int main()
