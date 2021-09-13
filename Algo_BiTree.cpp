@@ -79,6 +79,7 @@ void inorder(BiTree node)
         inorder(node->rchild);
     }
 }
+
 // 后序遍历
 void postorder(BiTree node)
 {
@@ -87,6 +88,29 @@ void postorder(BiTree node)
         postorder(node->lchild);
         postorder(node->rchild);
         printf("%d\n", node->data);
+    }
+}
+
+// 求树高
+int Get_height(BiNode *node)
+{
+    if (node == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        int Left_hight = Get_height(node->lchild);
+        int Right_hight = Get_height(node->rchild);
+        int max = Left_hight;
+        if (max > Right_hight)
+        {
+            return max + 1;
+        }
+        else
+        {
+            return Right_hight + 1;
+        }
     }
 }
 
@@ -104,5 +128,9 @@ int main()
     preorder(tree.root);
     printf("---------\n");
     inorder(tree.root);
+    int height;
+    height=Get_height(tree.root);
+    printf("--------\n");
+    printf("%d\n",height);
     return 0;
 }
