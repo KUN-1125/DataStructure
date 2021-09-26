@@ -35,40 +35,37 @@ void swap(int a, int b)
     b = temp;
 }
 
-void Heapify(int Arr[], int i, int len)
+void Heapify(int Arr[], int p, int len)
 {
-    Arr[0] = Arr[i];
-    int child = 2 * i;
+    Arr[0] = Arr[p];
+    int child = 2 * p;
     while (child <= len)
     {
-        if (child <= len - 1 && Arr[child] < Arr[child + 1])
+        if (child + 1 <= len && Arr[child + 1] > Arr[child])
             child++;
-        if (Arr[0] < Arr[child])
+        if (Arr[child] > Arr[0])
         {
-            Arr[i] = Arr[child];
-            i = child;
-            child = 2 * i;
+            Arr[p] = Arr[child];
+            p = child;
+            child = 2 * p;
         }
         else
             break;
     }
-    Arr[i] = Arr[0];
-}
-
-void BuildMaxHeap(int Arr[], int len)
-{
-    for (int i = len / 2; i > 0; i--)
-    {
-        Heapify(Arr, i, len);
-    }
+    Arr[p] = Arr[0];
 }
 
 void HeapSort(int Arr[], int len)
 {
-    BuildMaxHeap(Arr, len);
-    for (int i = len; i > 1; i--)
+    int i;
+    for (i = len / 2; i > 0; i--)
+        Heapify(Arr, i, len);
+    for (i = len - 1; i > 1; i--)
     {
-        swap(Arr[1], Arr[i]);
+        int temp;
+        temp = Arr[1];
+        Arr[1] = Arr[i];
+        Arr[i] = temp;
         Heapify(Arr, 1, i - 1);
     }
 }
@@ -76,33 +73,27 @@ void HeapSort(int Arr[], int len)
 //归并排序
 void Merge(int Arr[], int temp[], int low, int mid, int high)
 {
-    int i = low, j = mid + 1, k = low;
+    int i, j, k;
+    i = low;
+    j = mid + 1;
+    k = low;
     while (i <= mid && j <= high)
     {
         if (Arr[i] <= Arr[j])
-        {
             temp[k++] = Arr[i++];
-        }
         else
-        {
             temp[k++] = Arr[j++];
-        }
     }
     while (i <= mid)
-    {
         temp[k++] = Arr[i++];
-    }
     while (j <= high)
-    {
         temp[k++] = Arr[j++];
-    }
 }
 
 void mergePass(int Arr[], int temp[], int n, int len)
 {
-    int i, j;
-    i = 0;
-    while (i + 2 * len - 1 < n)
+    int i = 0;
+    while (i + 2 * len - 1 <= n - 1)
     {
         Merge(Arr, temp, i, i + len - 1, i + 2 * len - 1);
         i = i + 2 * len;
@@ -111,10 +102,8 @@ void mergePass(int Arr[], int temp[], int n, int len)
         Merge(Arr, temp, i, i + len - 1, n - 1);
     else
     {
-        for (j = i; j < n; j++)
-        {
+        for (int j = i; j < n; j++)
             temp[j] = Arr[j];
-        }
     }
 }
 
@@ -125,9 +114,9 @@ void mergeSort(int Arr[], int size)
     while (len < size)
     {
         mergePass(Arr, temp, size, len);
-        len = 2 * len;
+        len *= 2;
         mergePass(temp, Arr, size, len);
-        len = 2 * len;
+        len *= 2;
     }
 }
 
